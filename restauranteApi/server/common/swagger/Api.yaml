@@ -1,0 +1,67 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: restauranteApi
+  description: Restaurante Api
+basePath: /api/v1
+tags:
+  - name: Restaurante
+    description: API para restaurantes
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+definitions:
+  LancheBody:
+    type: array
+    title: lanches
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+
+
+paths:
+  /restaurante/items:
+    get:
+      tags:
+        - restaurante
+      description: Ingredientes cadastrados
+      responses:
+        200:
+          description: Retorna todos os ingredientes cadastrados na API
+        404:
+          description: Ingredientes não encontrados
+          
+  /restaurante/cardapio:
+    get:
+      tags:
+        - restaurante
+      description: Lanches disponíveis
+      responses:
+        200:
+          description: Retorna cardápio completo com os lanches disponíveis
+        404:
+          description: Cardápio não encontrado
+ 
+  /restaurante/montar:
+    post:
+      tags:
+        - restaurante
+      description: Create a new example
+      parameters:
+        - name: lanche
+          in: body
+          description: an example
+          required: true
+          schema: 
+            $ref: "#/definitions/LancheBody"
+      responses:
+        200:
+          description: Returns all restaurante

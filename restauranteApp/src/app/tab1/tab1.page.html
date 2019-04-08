@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Lanches do Cardápio
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngFor="let item of cardapio">
+    <ion-item>
+      <ion-grid>
+
+        <ion-row>
+
+          <ion-col size="2">
+            <img width="50%" src="https://giantsdinosaurs.files.wordpress.com/2011/05/hamburger.jpg">
+          </ion-col>
+
+          <ion-col size="8">
+            <ion-row>
+              <ion-col>
+                <ion-label>{{item.lanche}}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>{{item.ingredientes}}</ion-label>
+                <ion-label>R$ {{item.totalValue | number: '1.2-2' }}</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="2">
+            <ion-button (click)="add(item.totalValue)" color="success" float-end>
+              <ion-icon name="add-circle"></ion-icon>
+            </ion-button>
+            <ion-button (click)="remove(item.totalValue)" color="danger" float-end>
+              <ion-icon name="remove-circle"></ion-icon>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+
+  <ion-item color="medium">
+    <ion-label>
+        R$ {{total | number: '1.2-2' }}
+    </ion-label>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" expand="block">Vender</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="clear()" color="warning" expand="block">Limpar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>
