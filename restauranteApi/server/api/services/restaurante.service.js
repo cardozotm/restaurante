@@ -8,12 +8,16 @@ class RestauranteService {
     return db.all();
   }
 
+  create(n, v) {
+    return db.insert({ name: n, value: v });
+  }
+
   cardapio() {
     return preco.cardapio();
   }
 
   montarLanche(receita) {
-    return preco.montarLanche(receita)
+    return preco.montarLanche(receita);
   }
 
 }

@@ -7,6 +7,15 @@ export class Controller {
       .then(r => res.json(r));
   }
 
+  create(req, res) {
+    RestauranteService
+      .create(req.body.name, req.body.value)
+      .then(r => res
+        .status(201)
+        .location(`/api/v1/examples/${r.id}`)
+        .json(r));
+  }
+
   // Cardapio
   cardapio(req, res) {
     RestauranteService.cardapio()

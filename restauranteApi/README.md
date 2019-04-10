@@ -83,31 +83,4 @@ npm run dev:debug
 ```
 npm run test:debug
 ```
-
-#### Debug with VSCode
-
-Add these [contents](https://github.com/cdimascio/generator-express-no-stress/blob/next/assets/.vscode/launch.json) to your `.vscode/launch.json` file
-## Lint It
-
-View airbnb linter output
-
-```
-npm run lint
-```
-
-Fix all airbnb linter errors
-
-```
-npm run lint
-```
-
-## Deploy It
-
-Deploy to CloudFoundry
-
-```shell
-cf push restauranteApi
-```
-
-
    

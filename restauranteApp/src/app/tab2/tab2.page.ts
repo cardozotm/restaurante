@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
+import { AlertController } from '@ionic/angular';
+import { RestService } from '../service/rest/rest.service';
 
 @Component({
   selector: 'app-tab2',
@@ -10,7 +10,9 @@ import { environment } from '../../environments/environment'
 
 export class Tab2Page implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private rest: RestService,
+    private alertController: AlertController) { }
 
   items;
   receita = [
@@ -20,6 +22,7 @@ export class Tab2Page implements OnInit {
     { name: 'Ovo', count: 0 },
     { name: 'Queijo', count: 0 }
   ];
+
   lanche;
   desconto = 0;
   subtotal = 0;
@@ -35,18 +38,16 @@ export class Tab2Page implements OnInit {
   }
 
   getItems() {
-    this.http.get(environment.api + 'items')
-      .subscribe(data => {
-        this.items = data;
-        console.log(this.items);
-
-      })
+    this.rest.getItems()
+      .then(data => this.items = data)
+      .catch(error => this.errorAlert());
   }
 
+
   postMontar(payload) {
-    this.http.post(environment.api + 'montar', payload)
-      .subscribe((data: any) => {
-        this.lanche = data
+    this.rest.montarLanche(payload)
+      .then((data: any) => {
+        this.lanche = data;
         this.subtotal = data.fullPrice;
         this.desconto = data.discountsValue;
         this.total = data.fullPrice - data.discountsValue;
@@ -56,31 +57,31 @@ export class Tab2Page implements OnInit {
           if (el === 'isMuitaCarnePromo') { this.isMuitaCarnePromo = true; }
           if (el === 'isMuitoQueijo') { this.isMuitoQueijo = true; }
         });
-      });
-
+      })
+      .catch(error => this.errorAlert());
   }
 
   addItem(item) {
     const expr = item.name;
     switch (expr) {
       case 'Alface':
-        this.receita[0].count++
+        this.receita[0].count++;
         break;
       case 'Bacon':
-        this.receita[1].count++
+        this.receita[1].count++;
         break;
       case 'Hambúrguer de carne':
-        this.receita[2].count++
+        this.receita[2].count++;
         break;
       case 'Ovo':
-        this.receita[3].count++
+        this.receita[3].count++;
         break;
       case 'Queijo':
-        this.receita[4].count++
+        this.receita[4].count++;
         break;
     }
 
-    this.postMontar(this.receita)
+    this.postMontar(this.receita);
 
   }
 
@@ -88,23 +89,23 @@ export class Tab2Page implements OnInit {
     const expr = item.name;
     switch (expr) {
       case 'Alface':
-        if (this.receita[0].count > 0) { this.receita[0].count-- }
+        if (this.receita[0].count > 0) { this.receita[0].count--; }
         break;
       case 'Bacon':
-        if (this.receita[1].count > 0) { this.receita[1].count-- }
+        if (this.receita[1].count > 0) { this.receita[1].count--; }
         break;
       case 'Hambúrguer de carne':
-        if (this.receita[2].count > 0) { this.receita[2].count-- }
+        if (this.receita[2].count > 0) { this.receita[2].count--; }
         break;
       case 'Ovo':
-        if (this.receita[3].count > 0) { this.receita[3].count-- }
+        if (this.receita[3].count > 0) { this.receita[3].count--; }
         break;
       case 'Queijo':
-        if (this.receita[4].count > 0) { this.receita[4].count-- }
+        if (this.receita[4].count > 0) { this.receita[4].count--; }
         break;
     }
 
-    this.postMontar(this.receita)
+    this.postMontar(this.receita);
 
   }
 
@@ -117,16 +118,55 @@ export class Tab2Page implements OnInit {
       { name: 'Queijo', count: 0 }
     ];
 
-    this.postMontar(this.receita)
+    this.postMontar(this.receita);
 
   }
 
-  clearPromo(){
+  clearPromo() {
     this.isLight = false;
     this.isMuitaCarnePromo = false;
     this.isMuitoQueijo = false;
   }
 
+  async vender() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar venda!',
+      message: 'Confirmar venda no valor de: R$ ' + this.total ,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.clear();
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.clear();
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
+
+  async errorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Ocorreu um erro!',
+      message: 'Você está sem conexão ou houve um erro no servidor.',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.clear();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 }

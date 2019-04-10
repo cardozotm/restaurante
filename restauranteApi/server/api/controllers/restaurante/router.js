@@ -6,10 +6,5 @@ export default express
   // Ingredientes
   .get('/items', controller.all)
   .get('/cardapio', controller.cardapio)
-  .post('/montar', controller.montar)
-
-
-
-
-
-
+  .post('/criar', controller.create)
+  .post('/montar', controller.montar);

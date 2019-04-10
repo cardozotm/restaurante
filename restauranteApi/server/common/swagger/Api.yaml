@@ -25,6 +25,17 @@ definitions:
           type: string
         count:
           type: integer
+  
+  LancheItem:
+    type: object
+    title: items
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: integer
 
 
 paths:
@@ -65,3 +76,19 @@ paths:
       responses:
         200:
           description: Returns all restaurante
+
+  /restaurante/criar:
+    post:
+      tags:
+        - restaurante
+      description: Create a new item
+      parameters:
+        - name: lanche
+          in: body
+          description: an example
+          required: true
+          schema: 
+            $ref: "#/definitions/LancheItem"
+      responses:
+        200:
+          description: Insert new items

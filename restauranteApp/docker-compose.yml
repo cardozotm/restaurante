@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  ionic:
+    container_name: ionic
+    build: .
+    ports:
+      - 80:80
+      - 8080:8080
+      - 8100:8100

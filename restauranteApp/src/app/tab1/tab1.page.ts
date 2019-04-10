@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { restoreView } from '@angular/core/src/render3';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
-
-
+import { AlertController } from '@ionic/angular';
+import { RestService } from '../service/rest/rest.service';
 
 @Component({
   selector: 'app-tab1',
@@ -12,8 +9,9 @@ import { environment } from '../../environments/environment'
 })
 
 export class Tab1Page implements OnInit {
-  constructor(private http: HttpClient) { }
-
+  constructor(
+    private rest: RestService,
+    private alertController: AlertController) { }
 
   cardapio;
   total = 0;
@@ -23,10 +21,9 @@ export class Tab1Page implements OnInit {
   }
 
   getCardapio() {
-    this.http.get(environment.api + 'cardapio')
-      .subscribe(data => {
-        this.cardapio = data;
-      })
+    this.rest.getCardapio()
+      .then(data => this.cardapio = data)
+      .catch(error => this.errorAlert());
   }
 
   add(value) {
@@ -34,18 +31,56 @@ export class Tab1Page implements OnInit {
   }
 
   remove(value) {
-    if(this.total - value >= 0){
+    if (this.total - value >= 0) {
       this.total = this.total - value;
     }
   }
 
-  clear(){
-    this.total = 0
+  clear() {
+    this.total = 0;
   }
 
-  sell(){
+  async venderLanche() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar venda!',
+      message: 'Confirmar venda no valor de: R$ ' + this.total,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            this.clear();
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.clear();
+          }
+        }
+      ]
+    });
 
+    await alert.present();
   }
+
+  async errorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Ocorreu um erro!',
+      message: 'Você está sem conexão ou houve um erro no servidor.',
+      buttons: [
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.clear();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 }
 

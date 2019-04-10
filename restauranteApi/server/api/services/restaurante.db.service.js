@@ -9,34 +9,20 @@ class RestauranteDatabase {
 
     this._ingredientes = [];
 
-    this.insertIngrediente({ name: 'Alface', value: 0.4 });
-    this.insertIngrediente({ name: 'Bacon', value: 2 });
-    this.insertIngrediente({ name: 'Hambúrguer de carne', value: 3 });
-    this.insertIngrediente({ name: 'Ovo', value: 0.8 });
-    this.insertIngrediente({ name: 'Queijo', value: 1.5 });
+    // this.insert({ name: 'Alface', value: 0.4 });
+    // this.insert({ name: 'Bacon', value: 2 });
+    // this.insert({ name: 'Hambúrguer de carne', value: 3 });
+    // this.insert({ name: 'Ovo', value: 0.8 });
+    // this.insert({ name: 'Queijo', value: 1.5 });
   }
 
   all() {
     return Promise.resolve(this._ingredientes);
   }
 
-  byId(id) {
-    return Promise.resolve(this._ingredientes[id]);
-  }
-
   insert(ingrediente) {
     this._ingredientes.push(ingrediente);
     return Promise.resolve(ingrediente);
-  }
-
-  update(id, ingrediente) {
-    this._ingredientes[id] = ingrediente;
-    return Promise.resolve(ingrediente);
-  }
-
-  remove(id) {
-    delete this._ingredientes[id];
-    return Promise.resolve(this._ingredientes[id]);
   }
 
   cardapio() {
@@ -63,15 +49,10 @@ class RestauranteDatabase {
     });
   }
 
-  preco(receita) {
-    return new Promise(resolve => {
-
-    });
-  }
 
   promocao(receita, precoCheio) {
     let desconto;
-    
+
     if (this.isLight(receita)) {
       desconto += (precoCheio * 0.10);
     }
@@ -79,10 +60,8 @@ class RestauranteDatabase {
       for (let i = 0; i < receita.length; i++) {
         if (receita[i].name === 'Hambúrguer de carne') {
           const promoQtd = Math.floor(receita[i].count / 3);
-
         }
       }
-
     }
     if (this.isMuitoQueijo(receita)) { }
   }
