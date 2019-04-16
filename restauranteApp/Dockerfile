@@ -25,7 +25,6 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
-RUN rm -r node_modules
 RUN npm install
 CMD ionic serve 
 # RUN pwd
