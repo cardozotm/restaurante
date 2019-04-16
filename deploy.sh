@@ -10,4 +10,4 @@ if [[ $VALID != "failing" ]]
 cd $cwd/restauranteApi && sudo ./container-up.sh; bash &
 cd $cwd/restauranteApp && sudo ./container-up.sh; bash &
 
-fi
+fi  
