@@ -35,8 +35,12 @@ npm run test:debug
 * Open you're browser to [http://localhost:3000](http://localhost:3000)
 * Invoke the `/restaurantes` endpoint 
   ```shell
-  curl http://localhost:3000/api/v1/restaurante/cardapio
+  curl http://localhost:3000/api/v1/restaurant/menu
   ```
+
+## Web App
+* Beautiful Ionic/Angular Web App for Restaurant API
+* Open you're browser to [http://localhost:8100](http://localhost:8100)
 
 
 ## Debug It
