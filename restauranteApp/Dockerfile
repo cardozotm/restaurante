@@ -19,8 +19,6 @@ RUN apt-get update &&  \
     npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" && \
     npm cache clear --force
 
-RUN apt-get install -y nginx
-
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
