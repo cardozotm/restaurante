@@ -2,8 +2,8 @@ cwd=$(pwd)
 
 cd $(pwd)/restauranteApi
 
-echo "TESTING"
-VALID="$(npm test | grep -o 'failing')"
+echo "NPM INSTALL AND AUTOMATED TESTING"
+VALID="$(npm install && npm test | grep -o 'failing')"
 
 if [[ $VALID != "failing" ]]
    then
