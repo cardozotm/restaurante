@@ -92,7 +92,7 @@ class RestaurantDatabase {
     });
   }
 
-  async isALotOfCheese(recipe) {
+  isALotOfCheese(recipe) {
     return new Promise(resolve => {
       for (let i = 0; i < recipe.length; i++) {
         if (recipe[i].name === 'Queijo' && recipe[i].count > 2) {

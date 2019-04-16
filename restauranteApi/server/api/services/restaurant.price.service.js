@@ -3,30 +3,6 @@ import db from './restaurant.db.service';
 
 class RestaurantPrices {
   // Assembly of menu and calculation of prices
-  // menu() {
-  //   return new Promise(resolve => {
-  //     const menu = [];
-
-  //     for (let i = 0; i < db._sandwiches.length; i++) {
-  //       let price = 0;
-  //       const ingr = [];
-  //       for (let f = 0; f < db._sandwiches[i].ingredients.length; f++) {
-  //         ingr.push(db._sandwiches[i].ingredients[f]);
-  //         for (let g = 0; g < db._ingredients.length; g++) {
-  //           if (db._ingredients[g].name === db._sandwiches[i].ingredients[f]) {
-  //             price += db._ingredients[g].value;
-  //             break;
-  //           }
-  //         }
-  //       }
-
-  //       menu.push({ sandwiche: db._sandwiches[i].name, ingredients: ingr, totalValue: price });
-  //     }
-
-  //     return resolve(menu);
-  //   });
-  // }
-
   menu() {
     return db.menu();
   }
