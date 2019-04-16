@@ -3,7 +3,7 @@
 echo "=== mocking data ==="
 
 curl -X POST \
-  http://localhost:3000/api/v1/restaurante/criar \
+  http://localhost:3000/api/v1/restaurant/create \
   -H 'Content-Type: application/json' \
   -d '    {
         "name": "Alface",
@@ -11,7 +11,7 @@ curl -X POST \
     }'
 
 curl -X POST \
-  http://localhost:3000/api/v1/restaurante/criar \
+  http://localhost:3000/api/v1/restaurant/create \
   -H 'Content-Type: application/json' \
   -d '    {
         "name": "Bacon",
@@ -19,7 +19,7 @@ curl -X POST \
     }'
 
 curl -X POST \
-  http://localhost:3000/api/v1/restaurante/criar \
+  http://localhost:3000/api/v1/restaurant/create \
   -H 'Content-Type: application/json' \
   -d '    {
         "name": "Hambúrguer de carne",
@@ -27,7 +27,7 @@ curl -X POST \
     }'
 
 curl -X POST \
-  http://localhost:3000/api/v1/restaurante/criar \
+  http://localhost:3000/api/v1/restaurant/create \
   -H 'Content-Type: application/json' \
   -d '    {
         "name": "Ovo",
@@ -35,7 +35,7 @@ curl -X POST \
     }'
 
 curl -X POST \
-  http://localhost:3000/api/v1/restaurante/criar \
+  http://localhost:3000/api/v1/restaurant/create \
   -H 'Content-Type: application/json' \
   -d '     {
         "name": "Queijo",

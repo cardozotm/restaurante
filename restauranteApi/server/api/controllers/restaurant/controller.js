@@ -1,31 +1,30 @@
-import RestauranteService from '../../services/restaurante.service';
+import RestaurantService from '../../services/restaurant.service';
 
 export class Controller {
-  // Ingredientes
+
   all(req, res) {
-    RestauranteService.all()
+    RestaurantService.all()
       .then(r => res.json(r));
   }
 
   create(req, res) {
-    RestauranteService
+    RestaurantService
       .create(req.body.name, req.body.value)
       .then(r => res
         .status(201)
-        .location(`/api/v1/examples/${r.id}`)
+        .location(`/api/v1/restaurant/${r.id}`)
         .json(r));
   }
 
-  // Cardapio
-  cardapio(req, res) {
-    RestauranteService.cardapio()
+  menu(req, res) {
+    RestaurantService.menu()
       .then(r => res.json(r));
   }
 
-  // Calcula Preco
-  montar(req, res) {
-    RestauranteService
-      .montarLanche(req.body)
+
+  assemble(req, res) {
+    RestaurantService
+      .assembleSandwiches(req.body)
       .then(r => res
         .status(201)
         .json(r));
@@ -33,4 +32,5 @@ export class Controller {
 
 
 }
+
 export default new Controller();

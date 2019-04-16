@@ -10,9 +10,9 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  getCardapio() {
+  getMenu() {
     return new Promise((resolve, reject) => {
-      this.http.get(environment.api + 'cardapio')
+      this.http.get(environment.api + 'menu')
         .subscribe(
           (data) => {
             resolve(data);
@@ -36,9 +36,9 @@ export class RestService {
     });
   }
 
-  montarLanche(payload) {
+  assemblesandwich(payload) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.api + 'montar', payload)
+      this.http.post(environment.api + 'assemble', payload)
         .subscribe(
           (data) => {
             resolve(data);

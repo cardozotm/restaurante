@@ -17,11 +17,11 @@ export class Tab1Page implements OnInit {
   total = 0;
 
   ngOnInit(): void {
-    this.getCardapio();
+    this.getMenu();
   }
 
-  getCardapio() {
-    this.rest.getCardapio()
+  getMenu() {
+    this.rest.getMenu()
       .then(data => this.cardapio = data)
       .catch(error => this.errorAlert());
   }
@@ -40,7 +40,7 @@ export class Tab1Page implements OnInit {
     this.total = 0;
   }
 
-  async venderLanche() {
+  async sellSandwich() {
     const alert = await this.alertController.create({
       header: 'Confirmar venda!',
       message: 'Confirmar venda no valor de: R$ ' + this.total,

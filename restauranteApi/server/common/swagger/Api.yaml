@@ -1,12 +1,12 @@
 swagger: "2.0"
 info:
   version: 1.0.0
-  title: restauranteApi
-  description: Restaurante Api
+  title: restaurantApi
+  description: Restaurant API for selling sandwiches
 basePath: /api/v1
 tags:
-  - name: Restaurante
-    description: API para restaurantes
+  - name: Restaurant
+    description: Restaurant API for selling sandwiches
 
 consumes:
   - application/json
@@ -15,9 +15,9 @@ produces:
 
 
 definitions:
-  LancheBody:
+  SandwicheBody:
     type: array
-    title: lanches
+    title: sandwiches
     items:
       type: object
       properties:
@@ -26,7 +26,7 @@ definitions:
         count:
           type: integer
   
-  LancheItem:
+  SandwichItem:
     type: object
     title: items
     items:
@@ -39,56 +39,57 @@ definitions:
 
 
 paths:
-  /restaurante/items:
+  /restaurant/items:
     get:
       tags:
-        - restaurante
-      description: Ingredientes cadastrados
+        - restaurant
+      description: Registered Ingredients
       responses:
         200:
-          description: Retorna todos os ingredientes cadastrados na API
+          description: Returns all ingredients registered in the API
         404:
-          description: Ingredientes não encontrados
+          description: Ingredients not found
           
-  /restaurante/cardapio:
+  /restaurant/menu:
     get:
       tags:
-        - restaurante
-      description: Lanches disponíveis
+        - restaurant
+      description: available sandwiches
+
       responses:
         200:
-          description: Retorna cardápio completo com os lanches disponíveis
+          description: Return full menu with available sandwiches
         404:
-          description: Cardápio não encontrado
+          description: Menu not found
  
-  /restaurante/montar:
+  /restaurant/assemble:
     post:
       tags:
-        - restaurante
+        - restaurant
       description: Create a new example
       parameters:
-        - name: lanche
+        - name: sandwich
           in: body
           description: an example
           required: true
           schema: 
-            $ref: "#/definitions/LancheBody"
+            $ref: "#/definitions/SandwicheBody"
       responses:
         200:
-          description: Returns all restaurante
+          description: Returns all restaurants
 
-  /restaurante/criar:
+  /restaurant/create:
     post:
       tags:
-        - restaurante
+        - restaurant
       description: Create a new item
       parameters:
-        - name: lanche
+        - name: sandwich
           in: body
           description: an example
           required: true
           schema: 
-            $ref: "#/definitions/LancheItem"
+            $ref: "#/definitions/SandwichItem"
       responses:
         200:
           description: Insert new items

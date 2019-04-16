@@ -15,7 +15,7 @@ export class Tab2Page implements OnInit {
     private alertController: AlertController) { }
 
   items;
-  receita = [
+  recipe = [
     { name: 'Alface', count: 0 },
     { name: 'Bacon', count: 0 },
     { name: 'Hambúrguer de carne', count: 0 },
@@ -23,13 +23,13 @@ export class Tab2Page implements OnInit {
     { name: 'Queijo', count: 0 }
   ];
 
-  lanche;
+  sandwich;
   desconto = 0;
   subtotal = 0;
   total = 0;
   isLight = false;
-  isMuitaCarnePromo = false;
-  isMuitoQueijo = false;
+  isALotOfMeat = false;
+  isALotOfCheese = false;
 
   promocao;
 
@@ -44,18 +44,18 @@ export class Tab2Page implements OnInit {
   }
 
 
-  postMontar(payload) {
-    this.rest.montarLanche(payload)
+  postAssemble(payload) {
+    this.rest.assemblesandwich(payload)
       .then((data: any) => {
-        this.lanche = data;
+        this.sandwich = data;
         this.subtotal = data.fullPrice;
         this.desconto = data.discountsValue;
         this.total = data.fullPrice - data.discountsValue;
         this.clearPromo();
-        data.activePromo.forEach(el => {
+        data.activeoffer.forEach(el => {
           if (el === 'isLight') { this.isLight = true; }
-          if (el === 'isMuitaCarnePromo') { this.isMuitaCarnePromo = true; }
-          if (el === 'isMuitoQueijo') { this.isMuitoQueijo = true; }
+          if (el === 'isALotOfMeat') { this.isALotOfMeat = true; }
+          if (el === 'isALotOfCheese') { this.isALotOfCheese = true; }
         });
       })
       .catch(error => this.errorAlert());
@@ -65,23 +65,23 @@ export class Tab2Page implements OnInit {
     const expr = item.name;
     switch (expr) {
       case 'Alface':
-        this.receita[0].count++;
+        this.recipe[0].count++;
         break;
       case 'Bacon':
-        this.receita[1].count++;
+        this.recipe[1].count++;
         break;
       case 'Hambúrguer de carne':
-        this.receita[2].count++;
+        this.recipe[2].count++;
         break;
       case 'Ovo':
-        this.receita[3].count++;
+        this.recipe[3].count++;
         break;
       case 'Queijo':
-        this.receita[4].count++;
+        this.recipe[4].count++;
         break;
     }
 
-    this.postMontar(this.receita);
+    this.postAssemble(this.recipe);
 
   }
 
@@ -89,28 +89,28 @@ export class Tab2Page implements OnInit {
     const expr = item.name;
     switch (expr) {
       case 'Alface':
-        if (this.receita[0].count > 0) { this.receita[0].count--; }
+        if (this.recipe[0].count > 0) { this.recipe[0].count--; }
         break;
       case 'Bacon':
-        if (this.receita[1].count > 0) { this.receita[1].count--; }
+        if (this.recipe[1].count > 0) { this.recipe[1].count--; }
         break;
       case 'Hambúrguer de carne':
-        if (this.receita[2].count > 0) { this.receita[2].count--; }
+        if (this.recipe[2].count > 0) { this.recipe[2].count--; }
         break;
       case 'Ovo':
-        if (this.receita[3].count > 0) { this.receita[3].count--; }
+        if (this.recipe[3].count > 0) { this.recipe[3].count--; }
         break;
       case 'Queijo':
-        if (this.receita[4].count > 0) { this.receita[4].count--; }
+        if (this.recipe[4].count > 0) { this.recipe[4].count--; }
         break;
     }
 
-    this.postMontar(this.receita);
+    this.postAssemble(this.recipe);
 
   }
 
   clear() {
-    this.receita = [
+    this.recipe = [
       { name: 'Alface', count: 0 },
       { name: 'Bacon', count: 0 },
       { name: 'Hambúrguer de carne', count: 0 },
@@ -118,17 +118,17 @@ export class Tab2Page implements OnInit {
       { name: 'Queijo', count: 0 }
     ];
 
-    this.postMontar(this.receita);
+    this.postAssemble(this.recipe);
 
   }
 
   clearPromo() {
     this.isLight = false;
-    this.isMuitaCarnePromo = false;
-    this.isMuitoQueijo = false;
+    this.isALotOfMeat = false;
+    this.isALotOfCheese = false;
   }
 
-  async vender() {
+  async sell() {
     const alert = await this.alertController.create({
       header: 'Confirmar venda!',
       message: 'Confirmar venda no valor de: R$ ' + this.total ,

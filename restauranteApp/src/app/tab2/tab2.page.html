@@ -56,8 +56,8 @@
     </ion-label>
   
     <ion-badge *ngIf="isLight" color="success">Light 10% Off</ion-badge>
-    <ion-badge *ngIf="isMuitaCarnePromo" color="danger">Muita carne</ion-badge>
-    <ion-badge *ngIf="isMuitoQueijo" color="warning">Muito Queijo</ion-badge>
+    <ion-badge *ngIf="isALotOfMeat" color="danger">Muita carne</ion-badge>
+    <ion-badge *ngIf="isALotOfCheese" color="warning">Muito Queijo</ion-badge>
   </ion-item>
 
   <ion-item color="tertiary">
@@ -69,7 +69,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button (click)="vender()" color="success" expand="block">Vender</ion-button>
+        <ion-button (click)="sell()" color="success" expand="block">Vender</ion-button>
       </ion-col>
       <ion-col>
         <ion-button (click)="clear()" color="warning" expand="block">Limpar</ion-button>

@@ -6,7 +6,7 @@ import Server from '../server';
 
 const { expect } = chai;
 
-const _ingredientes = [
+const _ingredients = [
   { name: 'Alface', value: 0.4 },
   { name: 'Bacon', value: 2 },
   { name: 'Hambúrguer de carne', value: 3 },
@@ -15,21 +15,21 @@ const _ingredientes = [
 ];
 
 
-const testePromo = [
+const testOffer = [
   { name: 'Alface', count: 1 },
   { name: 'Hambúrguer de carne', count: 3 },
   { name: 'Queijo', count: 3 },
 ];
 
 
-// Calcula o valor de um lanche baseado na lista de ingedientes e seus preços
-async function valor(ingredients) {
+// Calculates the value of a sandwich based on the list of ingredients and their prices
+function price(ingredients) {
   return new Promise(resolve => {
     let price = 0;
     for (let f = 0; f < ingredients.length; f++) {
-      for (let g = 0; g < _ingredientes.length; g++) {
-        if (_ingredientes[g].name === ingredients[f]) {
-          price += _ingredientes[g].value;
+      for (let g = 0; g < _ingredients.length; g++) {
+        if (_ingredients[g].name === ingredients[f]) {
+          price += _ingredients[g].value;
           break;
         }
       }
@@ -42,9 +42,9 @@ function promo(ingredients) {
   return new Promise(resolve => {
     let price = 0;
     for (let f = 0; f < ingredients.length; f++) {
-      for (let g = 0; g < _ingredientes.length; g++) {
-        if (_ingredientes[g].name === ingredients[f].name) {
-          price += _ingredientes[g].value * ingredients[f].count;
+      for (let g = 0; g < _ingredients.length; g++) {
+        if (_ingredients[g].name === ingredients[f].name) {
+          price += _ingredients[g].value * ingredients[f].count;
           break;
         }
       }
@@ -54,10 +54,10 @@ function promo(ingredients) {
 }
 
 
-_ingredientes.forEach(element => {
-  describe(`Cadastrar ${element.name} com valor: ${element.value}`, () => {
-    it('Cadastra e verifica o valor de cada item', () => request(Server)
-      .post('/api/v1/restaurante/criar')
+_ingredients.forEach(element => {
+  describe(`Enter ${element.name} with the value: ${element.value}`, () => {
+    it('Register and verify the value of each item', () => request(Server)
+      .post('/api/v1/restaurant/create')
       .send(element)
       .then(r => {
         expect(r.body)
@@ -66,15 +66,15 @@ _ingredientes.forEach(element => {
   });
 });
 
-describe('Testar preços dos lanches', () => {
-  it('Verificar se o preço de cada lanche está sendo calculado corretamente', () => request(Server)
-    .get('/api/v1/restaurante/cardapio')
+describe('Test Sandwich Prices', () => {
+  it('Check that the price of each sandwich is being calculated correctly', () => request(Server)
+    .get('/api/v1/restaurant/menu')
     .expect('Content-Type', /json/)
     .then(r => {
       r.body.forEach(el => {
-        valor(el.ingredientes)
+        price(el.ingredients)
           .then(value => {
-            console.log(`    ${el.lanche}: valor calculado: ${value}, valor recebido: ${el.totalValue}`);
+            console.log(`    ${el.lanche}: calculated price: ${value}, amount received: ${el.totalValue}`);
             expect(value)
               .to.be.equal(el.totalValue);
           });
@@ -84,20 +84,20 @@ describe('Testar preços dos lanches', () => {
     }));
 });
 
-describe('Promoções', () => {
-  it('Retorna promoções corretamente', () => request(Server)
-    .post('/api/v1/restaurante/montar')
-    .send(testePromo)
+describe('Special Offers', () => {
+  it('Returns correct special offers', () => request(Server)
+    .post('/api/v1/restaurant/assemble')
+    .send(testOffer)
     .expect('Content-Type', /json/)
     .then(r => {
-      expect(r.body.activePromo)
+      expect(r.body.activeoffer)
         .to.be.an.an('array')
-        .to.deep.equal(['isLight', 'isMuitaCarnePromo', 'isMuitoQueijo']);
+        .to.deep.equal(['isLight', 'isALotOfMeat', 'isALotOfCheese']);
     }));
 
 
-  it('Retorna descontos corretamente - Light', () => request(Server)
-    .post('/api/v1/restaurante/montar')
+  it('Returns Discounts Correctly - isLight', () => request(Server)
+    .post('/api/v1/restaurant/assemble')
     .send([{ name: 'Alface', count: 1 }])
     .expect('Content-Type', /json/)
     .then(r => {
@@ -108,8 +108,8 @@ describe('Promoções', () => {
         });
     }));
 
-  it('Retorna descontos corretamente - Muita Carne', () => request(Server)
-    .post('/api/v1/restaurante/montar')
+  it('Returns Discounts Correctly - isALotOfMeat', () => request(Server)
+    .post('/api/v1/restaurant/assemble')
     .send([{ name: 'Hambúrguer de carne', count: 3 }])
     .expect('Content-Type', /json/)
     .then(r => {
@@ -120,8 +120,8 @@ describe('Promoções', () => {
         });
     }));
 
-  it('Retorna descontos corretamente - Muito Queijo', () => request(Server)
-    .post('/api/v1/restaurante/montar')
+  it('Returns Discounts Correctly - isALotOfCheese', () => request(Server)
+    .post('/api/v1/restaurant/assemble')
     .send([{ name: 'Queijo', count: 3 }])
     .expect('Content-Type', /json/)
     .then(r => {
